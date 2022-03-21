@@ -1,0 +1,51 @@
+.panel {
+  width: 500px;
+  height: 300px;
+  margin: 0 auto;
+  background: #011627;
+  border-radius: 10px;
+  display: grid;
+  position: relative;
+  padding: 20px;
+}
+
+textarea {
+  background: none;
+  outline: none;
+  display: flex;
+  resize: none;
+  border: none;
+  overflow: auto;
+  margin: 0;
+  color: transparent;
+  caret-color: #cbf3fc;
+  font-size: 20px;
+  font-family: 'Ubuntu Mono', monospace;
+  tab-size: 2em;
+  position: absolute; 
+  width: 496px;
+  height: 296px;
+  align-self: center;
+  margin-left: 20px;
+  z-index: 2;
+}
+
+#output
+{
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  position: absolute;
+  margin: 20px;
+  width: inherit;
+  height: inherit;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+
+  font-size: 20px;
+  font-family: 'Ubuntu Mono', monospace;
+  color: #cbf3fc;
+  tab-size: 2em;
+}
+
+
