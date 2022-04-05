@@ -1,3 +1,7 @@
+body {
+  background: #202026;
+}
+
 .panel {
   width: 500px;
   height: 300px;
@@ -7,6 +11,7 @@
   display: grid;
   position: relative;
   padding: 20px;
+  margin-top: 100px;
 }
 
 textarea {
