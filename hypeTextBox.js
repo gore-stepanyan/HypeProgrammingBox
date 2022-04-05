@@ -1,61 +1,17 @@
-const magenta = "#c080b5";
-const yellow = "#ec9345";
-const violet = "#a68bcc";
-const numerics = "#ee7f52";
-const yellowPre = "#e1d86b";
-const blue = "#64a2e4";
-
-
-
-const colorMap = 
-{
-    "int": blue, 
-    "object": blue,
-    "void": blue,
-    "bool": blue,
-    "null": blue,
-    "var": blue,
-    "string": blue,
-    "float": blue,
-    "double": blue,
-    "byte": blue,
-    "char": blue,
-    "public": blue,
-    "private": blue,
-    "as": blue,
-    "new": blue,
-    "true": blue,
-    "false": blue,
-    "class": blue,
-    "const": blue,
-    "override": blue,
-    "using": blue,
-    "namespace": blue,
-    "main": yellow,
-    "switch": magenta,
-    "case": magenta,
-    "break": magenta,
-    "continue": magenta,
-    "default": magenta,
-    "try": magenta,
-    "catch": magenta,
-    "finally": magenta,
-    "throw": magenta,
-    "break": magenta,
-    "return": magenta,
-    "if": magenta,
-    "while": magenta,
-    "foreach": magenta,
-    "in": magenta,
-    "do": magenta,
-    "else": magenta,
-    "for": magenta,
-}
+//регулярки
+var stringRegExp = /(".*?")/g,
+    charRegExp = /('.*?')/g,
+    keywordRegExp = /\b(int|object|void|bool|null|var|float|double|byte|char|public|private|as|new|true|false|const|override|using|namespace)\b/g,
+    statekeywordRegExp = /\b(new|var|if|else|do|while|case|switch|for|foreach|in|continue|break|try|catch|finally|throw|return)\b/g,
+    numericRegExp = /\b(\d+\.?\d*)\b/g,
+    directiveRegExp  = /(#\S*)/g,
+    multiLineCommentRegExp  = /(\/\*[\s\S]*?\*\/)/g,
+    singleLineCommentRegExp = /(\/\/.*)/g,
+    methodRegExp = /\b([a-zA-Z]\w*(?=\())/g;
 
 class HypeTextBox extends HTMLElement {
     constructor() {
         super();
-        
         customElements.define('hype-text-box', HypeTextBox);
     }        
 }
@@ -71,8 +27,8 @@ output.setAttribute('id', 'output');
 collection = document.getElementsByTagName('hype-text-box');
 for (let i = 0; i < collection.length; i++) {
     collection[i].appendChild(panel);
-    panel.appendChild(output);
     panel.appendChild(input);
+    panel.appendChild(output);
 }
 
 document.getElementById('input').addEventListener('keydown', e => {
@@ -86,20 +42,39 @@ document.getElementById('input').addEventListener('keydown', e => {
 input.addEventListener("input", function()
 {
     output.innerHTML = applyColors(input.value);
+
+    //наследование цвета от родительского блока
+    var collection = output.querySelectorAll(".keyword, .state-keyword, .string, .comment, .numeric, .directive, .method");
+    for (let i = 0; i < collection.length; i++) {
+        console.log(collection[i].className, collection[i].parentNode.className)
+        if (collection[i].parentNode.className == "string" || collection[i].parentNode.className == "comment")        {
+            console.log(window.getComputedStyle(collection[i].parentNode).getPropertyValue("color"));
+            collection[i].style.color = window.getComputedStyle(collection[i].parentNode).getPropertyValue("color");
+        }
+    }
 });
 
 input.addEventListener("scroll", function()
 {
+    //синхронихпця прокручивания
     output.scrollTop = input.scrollTop;
 });
 
-function applyColors(text)
+function applyColors(code)
 {
-    let re = new RegExp(Object.keys(colorMap).join("|"), "gi");
+    code = code.replace(stringRegExp,`<span class="string">$1</span>`);
+    code = code.replace(numericRegExp,'<span class="numeric">$1</span>');
+    code = code.replace(directiveRegExp,'<span class="directive">$1</span>');
+    code = code.replace(charRegExp,`<span class="string">$1</span>`);
+    code = code.replace(singleLineCommentRegExp,'<span class="comment">$1</span>');
+    code = code.replace(multiLineCommentRegExp,'<span class="comment">$1</span>');
+    code = code.replace(keywordRegExp,'<span class="keyword">$1</span>');
+    code = code.replace(statekeywordRegExp,'<span class="state-keyword">$1</span>');
+    code = code.replace(methodRegExp,'<span class="method">$1</span>');
 
-    return text.replace(re, function(m)
-    {
-        let c = colorMap[m.toLowerCase()];
-        return `<spam style="color:${c}">${m}</spam>`;
-    });
+    //специальные выражения для избежания ошибок
+    code = code.replace(/\b(?<!<span )(class)\b/g, '<span class="keyword">$1</span>')
+    code = code.replace(/\b(?<!<span class=")(string)\b/g, '<span class="keyword">$1</span>')
+
+    return code;
 }

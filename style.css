@@ -2,7 +2,7 @@
   width: 500px;
   height: 300px;
   margin: 0 auto;
-  background: #011627;
+  background: #232834;
   border-radius: 10px;
   display: grid;
   position: relative;
@@ -18,16 +18,22 @@ textarea {
   overflow: auto;
   margin: 0;
   color: transparent;
-  caret-color: #cbf3fc;
-  font-size: 20px;
+  caret-color: #51a1b3;
+  font-size: 14pt;
   font-family: 'Ubuntu Mono', monospace;
   tab-size: 2em;
   position: absolute; 
-  width: 496px;
-  height: 296px;
+  width: inherit;
+  height: inherit;
   align-self: center;
-  margin-left: 20px;
+  margin-left: 18px;
   z-index: 2;
+}
+
+textarea::selection {
+  background: #3b5c7a7e;
+  outline: none;
+  border-radius: 5px;
 }
 
 #output
@@ -42,10 +48,36 @@ textarea {
   overflow: hidden;
   pointer-events: none;
 
-  font-size: 20px;
+  font-size: 14pt;
   font-family: 'Ubuntu Mono', monospace;
   color: #cbf3fc;
   tab-size: 2em;
 }
 
+.string {
+  color:#98C379;
+}
 
+.keyword {
+  color:#B972D0;
+}
+
+.state-keyword {
+  color: #7887DD;
+}
+
+.comment{
+  color:#5C6370;
+}
+
+.numeric{
+  color: #ee7f52;
+}
+
+.directive{
+  color: #e1d86b;
+}
+
+.method{
+  color: #56B6C2;
+}
