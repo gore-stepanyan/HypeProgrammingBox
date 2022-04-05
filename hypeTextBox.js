@@ -1,7 +1,7 @@
 //регулярки
 var stringRegExp = /(".*?")/g,
     charRegExp = /('.*?')/g,
-    keywordRegExp = /\b(int|object|void|bool|null|var|float|double|byte|char|public|private|as|new|true|false|const|override|using|namespace)\b/g,
+    keywordRegExp = /\b(int|object|void|bool|null|var|float|static|double|byte|char|public|private|as|new|true|false|const|override|using|namespace)\b/g,
     statekeywordRegExp = /\b(new|var|if|else|do|while|case|switch|for|foreach|in|continue|break|try|catch|finally|throw|return)\b/g,
     numericRegExp = /\b(\d+\.?\d*)\b/g,
     directiveRegExp  = /(#\S*)/g,
