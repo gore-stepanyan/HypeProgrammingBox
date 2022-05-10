@@ -1,10 +1,9 @@
 //регулярки
 var stringRegExp = /(".*?")/g,
     charRegExp = /('.*?')/g,
-    keywordRegExp = /\b(int|object|void|bool|null|var|float|static|double|byte|char|public|private|as|new|true|false|const|override|using|namespace)\b/g,
-    statekeywordRegExp = /\b(new|var|if|else|do|while|case|switch|for|foreach|in|continue|break|try|catch|finally|throw|return)\b/g,
+    keywordRegExp = /\b(int|object|void|bool|null|var|float|double|byte|char|public|static|private|as|new|true|false|const|override|using|namespace)\b/g,
+    statekeywordRegExp = /\b(if|else|do|while|case|switch|for|foreach|in|continue|break|try|catch|finally|throw|return)\b/g,
     numericRegExp = /\b(\d+\.?\d*)\b/g,
-    directiveRegExp  = /(#\S*)/g,
     multiLineCommentRegExp  = /(\/\*[\s\S]*?\*\/)/g,
     singleLineCommentRegExp = /(\/\/.*)/g,
     methodRegExp = /\b([a-zA-Z]\w*(?=\())/g;
@@ -64,7 +63,6 @@ function applyColors(code)
 {
     code = code.replace(stringRegExp,`<span class="string">$1</span>`);
     code = code.replace(numericRegExp,'<span class="numeric">$1</span>');
-    code = code.replace(directiveRegExp,'<span class="directive">$1</span>');
     code = code.replace(charRegExp,`<span class="string">$1</span>`);
     code = code.replace(singleLineCommentRegExp,'<span class="comment">$1</span>');
     code = code.replace(multiLineCommentRegExp,'<span class="comment">$1</span>');

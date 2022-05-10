@@ -79,10 +79,6 @@ textarea::selection {
   color: #ee7f52;
 }
 
-.directive{
-  color: #e1d86b;
-}
-
 .method{
   color: #56B6C2;
 }
